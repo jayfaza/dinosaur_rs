@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::Step;
+use crate::step::Step;
 
 #[derive(Component)]
 pub struct DinoInfo {
@@ -9,6 +9,15 @@ pub struct DinoInfo {
 
 #[derive(Component)]
 pub struct Dino;
+
+pub struct DinoPlugin;
+
+impl Plugin for DinoPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(Startup, setup_dino)
+            .add_systems(Update, update_dino);
+    }
+}
 
 impl Dino {
     pub fn new(asset_server: ResMut<AssetServer>) -> (Self, Sprite, Transform) {
@@ -37,4 +46,11 @@ pub fn update_dino(
             trans.translation.x += 2.;
         }
     }
+}
+
+pub fn setup_dino(mut commands: Commands, asset_server: ResMut<AssetServer>) {
+    let dino = Dino::new(asset_server);
+    let dino_info = DinoInfo { step: Step::Left };
+    commands.spawn(dino);
+    commands.spawn(dino_info);
 }

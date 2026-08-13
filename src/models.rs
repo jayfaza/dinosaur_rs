@@ -9,6 +9,8 @@ pub struct Models {
     pub ground: Sprite,
 }
 
+pub struct ModelsPlugin;
+
 impl Models {
     pub fn new(asset_server: ResMut<AssetServer>) -> Self {
         let dino_static = Sprite::from_image(asset_server.load("dinosaur-static.png"));
@@ -25,4 +27,14 @@ impl Models {
             ground: ground,
         }
     }
+}
+
+impl Plugin for ModelsPlugin {
+    fn build(&self, app: &mut bevy::app::App) {
+        app.add_systems(Startup, setup_models);
+    }
+}
+
+fn setup_models(mut commands: Commands, asset_server: ResMut<AssetServer>) {
+    commands.spawn(Models::new(asset_server));
 }

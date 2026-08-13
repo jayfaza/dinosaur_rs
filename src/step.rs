@@ -1,8 +1,18 @@
-use crate::{Dino, DinoInfo, Models};
+use crate::dino::{Dino, DinoInfo};
+use crate::models::Models;
 use bevy::prelude::*;
 
 #[derive(Resource)]
 pub struct StepTimer(pub Timer);
+
+pub struct StepPlugin;
+
+impl Plugin for StepPlugin {
+    fn build(&self, app: &mut App) {
+        app.insert_resource(StepTimer(Timer::from_seconds(0.13, TimerMode::Repeating)));
+        app.add_systems(Update, update_step);
+    }
+}
 
 pub enum Step {
     Left,
@@ -24,7 +34,7 @@ pub fn update_step(
     mut dino_info: Query<&mut DinoInfo>,
     dino: Query<(&Dino, &mut Sprite, &Transform)>,
 ) {
-    use crate::Step;
+    use crate::step::Step;
     if is_step(time, timer) {
         for (_, mut sprite, _) in dino {
             for models in &models {
