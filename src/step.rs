@@ -1,22 +1,23 @@
 use crate::dino::{Dino, DinoInfo};
 use crate::models::Models;
 use bevy::prelude::*;
+use crate::config::TIME_BETWEEN_DINO_STEPS;
 
 #[derive(Resource)]
 pub struct StepTimer(pub Timer);
 
 pub struct StepPlugin;
 
-impl Plugin for StepPlugin {
-    fn build(&self, app: &mut App) {
-        app.insert_resource(StepTimer(Timer::from_seconds(0.13, TimerMode::Repeating)));
-        app.add_systems(Update, update_step);
-    }
-}
-
 pub enum Step {
     Left,
     Right,
+}
+
+impl Plugin for StepPlugin {
+    fn build(&self, app: &mut App) {
+        app.insert_resource(StepTimer(Timer::from_seconds(TIME_BETWEEN_DINO_STEPS, TimerMode::Repeating)));
+        app.add_systems(Update, update_step);
+    }
 }
 
 fn is_step(time: Res<Time>, mut timer: ResMut<StepTimer>) -> bool {

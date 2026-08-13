@@ -1,0 +1,4 @@
+pub const RESOLUTION_WIDTH: u32 = 1920;
+pub const RESOLUTION_HEIGHT: u32 = 1080;
+
+pub const TIME_BETWEEN_DINO_STEPS: f32 = 0.13;
