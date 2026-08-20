@@ -7,6 +7,7 @@ use crate::models::ModelsPlugin;
 use crate::overlay::OverlayPlugin;
 use crate::step::StepPlugin;
 use crate::window::GameWindowPlugin;
+use crate::config::ConfigPlugin;
 
 pub struct Game {
     app: App,
@@ -18,6 +19,7 @@ impl Game {
 
         game.app
             .insert_resource(ClearColor(Color::linear_rgb(1.0, 1.0, 1.0)))
+            .add_plugins(ConfigPlugin)
             .add_plugins((
                 GameWindowPlugin,
                 DinoPlugin,

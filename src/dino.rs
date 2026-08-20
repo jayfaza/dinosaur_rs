@@ -7,6 +7,14 @@ pub struct DinoInfo {
     pub step: Step,
 }
 
+#[derive(Resource)]
+pub struct DinoPos {
+    pub x: i32,
+    pub y: i32,
+    pub max_x: f32,
+    pub min_x: f32,
+}
+
 #[derive(Component)]
 pub struct Dino;
 
@@ -32,18 +40,21 @@ impl Dino {
 pub fn update_dino(
     keys: Res<ButtonInput<KeyCode>>,
     translation: Query<&mut Transform, With<Dino>>,
+    mut dino_pos: ResMut<DinoPos>,
 ) {
     for mut trans in translation {
         if keys.pressed(KeyCode::KeyA) {
-            if trans.translation.x <= -410. {
+            if trans.translation.x <= dino_pos.min_x {
                 break;
             }
             trans.translation.x -= 2.;
+            dino_pos.x -= 2;
         } else if keys.pressed(KeyCode::KeyD) {
-            if trans.translation.x >= 410. {
+            if trans.translation.x >= dino_pos.max_x {
                 break;
             }
             trans.translation.x += 2.;
+            dino_pos.x += 2;
         }
     }
 }
