@@ -41,8 +41,8 @@ impl Plugin for GameWindowPlugin {
 fn calculate_window_properties() -> (String, WindowMode, Option<String>, WindowResolution) {
     let title = WINDOW_TITLE.to_string();
     let mode = match WINDOW_MODE {
-        Windowed => WindowMode::BorderlessFullscreen(MonitorSelection::Current),
-        Fullscreen => WindowMode::Windowed,
+        Fullscreen => WindowMode::BorderlessFullscreen(MonitorSelection::Current),
+        Windowed => WindowMode::Windowed,
     };
     let name = Some(WINDOW_NAME.to_string());
     let resolution = WindowResolution::new(RESOLUTION_WIDTH, RESOLUTION_HEIGHT);
